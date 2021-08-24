@@ -8,9 +8,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //AÑADIDO POR NOSOTROS
 import { MaterialModule } from './material.module';
 import {HttpClientModule} from'@angular/common/http'
+import { CarritoComponent } from './pages/carrito/carrito.component';
+import { DetalleComponent } from './pages/carrito/detalle/detalle.component';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CarritoComponent
+    
   ],
   imports: [
     BrowserModule,

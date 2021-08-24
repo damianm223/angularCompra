@@ -1,0 +1,42 @@
+<div class="container">
+
+    <form class="item form">
+        <mat-form-field  class="form__element">
+            <input matInput placeholder="Nombre" required [(ngModel)]="model.nombre" name="nombre" #nombre="ngModel">
+            <mat-error *ngIf='!nombre.valid || nombre.pristine'>El nombre es requerido</mat-error>
+        </mat-form-field>
+
+        <mat-radio-group class="form__element">
+            <p>Elige una opcion:</p>
+            <mat-radio-button value="tienda" (change)="recogidaTienda(false)">Recogida en tienda</mat-radio-button><br>
+            <mat-radio-button value="casa" (change)="recogidaCasa(true)">Envío a casa</mat-radio-button>
+        </mat-radio-group>
+<br>
+        <mat-form-field class="form__element">
+            <input matInput placeholder="Direccion Envio" [(ngModel)]="model.direccionEnvio" name="direccionEnvio" #direccionEnvio="ngModel">
+       
+        </mat-form-field>
+<br>
+        <mat-form-field class="form__element">
+            <input matInput placeholder="Ciudad" [(ngModel)]="model.ciudad" name="ciudad" #ciudad="ngModel">
+        </mat-form-field>
+<br>
+        <mat-form-field class="form__element">
+            <mat-label>Selecciona una:</mat-label>
+           <mat-select name="tienda" #tienda="ngModel" [(ngModel)]="model.tienda">
+            <mat-option *ngFor="let tienda of tiendas" [value]="tienda.name">{{tienda.name}} - {{tienda.openingHours}}</mat-option>
+           </mat-select>
+        </mat-form-field>
+    </form>
+
+</div>
+
+
+<app-detalle></app-detalle>
+
+
+<div class="container__button">
+    <button [disabled]="" mat-raised-button color="primary" type="submit">
+        Pagar
+    </button>
+</div>
