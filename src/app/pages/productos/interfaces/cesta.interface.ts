@@ -1,9 +1,4 @@
-export interface Detalle {
-    id: number,
-    idPedido: number,
-    cantidad: number,
-    productName: string
-}
+
 
 /*
   "id": 1,
@@ -11,14 +6,7 @@ export interface Detalle {
     "quantity": 10,
     "productName": "Product name" */
 
-export interface Pedido {
-    nombre: string,
-    direccionEnvio: string,
-    ciudad: string,
-    fecha: string,
-    metodoRecogida: boolean,
-    id: number
-}
+
 
 /* "id": 1,
         "name": "Dominicode",
@@ -26,3 +14,24 @@ export interface Pedido {
         "shippingAddress": "Av. de la Granvia de Hospitalet, 115",
         "city": "Barcelona",
         "pickup": true */
+
+
+export interface Detalle {
+    idProducto: number;
+    nombre: string;
+    cantidad: number;
+}
+
+export interface Pedido {
+    nombre: string;
+    direccionEnvio: string;
+    ciudad: string;
+    fecha: string;
+    metodoEnvio: boolean;
+    id: number;
+}
+
+export interface DetallePedido {
+    detalle: Detalle[];
+    orderId: number;
+}

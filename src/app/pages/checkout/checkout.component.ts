@@ -3,7 +3,7 @@ import { Tienda } from '../productos/interfaces/tienda.inteface'
 import { TiendasService } from '../productos/services/tiendas.service';
 import { switchMap, tap } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
-import { Detalle } from '../productos/interfaces/cesta.interface';
+import { Detalle, DetallePedido } from '../productos/interfaces/cesta.interface';
 import { Producto } from '../productos/interfaces/producto.inteface';
 import { CarritoService } from '../productos/services/carrito.service';
 
@@ -19,15 +19,17 @@ export class CheckoutComponent implements OnInit {
     direccionEnvio: '',
     ciudad: ''
   }
-  carrito : Producto[]=[];
+  carrito: Producto[] = [];
 
   tiendas: Tienda[] = [];
   metodoRecogida: boolean = false;
 
-  constructor(private tiendaService: TiendasService,private carritoService: CarritoService) { }
+  constructor(private tiendaService: TiendasService, private carritoService: CarritoService) { }
 
   ngOnInit(): void {
     this.getTiendas();
+    this.recogerDatosCarrito();
+    this.prepararDetalles();
   }
 
 
@@ -45,11 +47,13 @@ export class CheckoutComponent implements OnInit {
     }
 
     this.tiendaService.guardarCesta(datos).pipe(
-      tap(respuesta => console.log('pedido ->',respuesta)),
-      switchMap( (pedido)=> { const detalle={};
-              return this.tiendaService.guardarDetalleCesta(detalle);
-              }
-    )).subscribe();
+      tap(respuesta => console.log('pedido ->', respuesta)),
+      switchMap((pedido) => {
+        const idPedido = pedido.id;
+        const detalle = this.prepararDetalles();
+        return this.tiendaService.guardarDetalleCesta(detalle);
+      }
+      )).subscribe();
   }
 
   getTiendas(): void {
@@ -64,18 +68,26 @@ export class CheckoutComponent implements OnInit {
     return new Date().toLocaleDateString();
   }
 
-  private prepararDetalles():Detalle[]{
-    const detalle : Detalle[]= [];
+  private prepararDetalles(): DetallePedido[] {
+    const detalle: DetallePedido[] = [];
+    this.carrito.forEach((produ: Producto) => {
 
+      const { id: idProducto, name: nombre, cantidad: cantidad, stock: stock } = produ;
 
-    return detalle; 
+      
+    })
+
+    return detalle;
 
   }
 
-  private recogerDatosCarrito():void{
-   this.carrito= this.carritoService.productos;
+  private recogerDatosCarrito(): void {
+    this.carritoService.carritoAction$.pipe(
+      tap((prod: Producto[]) => this.carrito = prod)
+    )
+      .subscribe();
   }
-//Seguir 3.53.42 el video
+  //Seguir 3.53.42 el video
 
 }
 

@@ -1,35 +1,36 @@
-<ng-container class="container__table">
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped table-bordered table-hover">
 
-    <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Articulo</th>
+                        <th>Cantidad</th>
+                        <th>Precio/Unidad</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
 
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Articulo</th>
-                <th>Cantidad</th>
-                <th>Precio/Unidad</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
+                <tbody *ngFor="let art of carrito$ |async">
+                    <tr>
+                        <td>{{art.id}}</td>
+                        <td>{{art.name}}</td>
+                        <td>{{art.cantidad}}</td>
+                        <td>{{art.price |currency}}</td>
+                        <td>{{art.cantidad * art.price |currency}}</td>
+                    </tr>
+                </tbody>
 
-        <tbody>
-            <tr *ngFor="let art of carrito$ |async">
-                <td>{{art.id}}</td>
-                <td>{{art.name}}</td>
-                <td>{{art.cantidad}}</td>
-                <td>{{art.price |currency}}</td>
-                <td>{{art.cantidad * art.price |currency}}</td>
-            </tr>
-        </tbody>
-
-    </table>
-
-
-    <div class="container_total">
-        <p class="total">
-            <strong>Total: <span>{{total$|async |currency}}</span></strong>
-        </p>
+            </table>
+        </div>
     </div>
+</div>
+<div class="container_total">
+    <p class="total">
+        <strong>Total: <span>{{total$|async |currency}}</span></strong>
+    </p>
+</div>
 
 
-</ng-container>

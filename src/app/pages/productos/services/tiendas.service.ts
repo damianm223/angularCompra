@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Detalle, Pedido } from '../interfaces/cesta.interface';
+import { Detalle, DetallePedido, Pedido } from '../interfaces/cesta.interface';
 import { Tienda } from '../interfaces/tienda.inteface';
 
 
@@ -21,8 +21,8 @@ export class TiendasService {
       return this.http.post<Pedido>(`${this.apiURL}/orders`,carrito);
     }
 
-    guardarDetalleCesta(detalle:Detalle):Observable<Detalle>{
-      return this.http.post<Detalle>(`${this.apiURL}/detailsOrders`,detalle);
+    guardarDetalleCesta(detalle:DetallePedido[]):Observable<DetallePedido[]>{
+      return this.http.post<DetallePedido[]>(`${this.apiURL}/detailsOrders`,detalle);
     }
 
   
